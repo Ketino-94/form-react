@@ -11,7 +11,8 @@ export default class App extends Component {
     repeatPassword: '',
     country: '1',
     gender: 'male',
-    agree: true
+    agree: true,
+    avatar: ''
   }
 
   onChange = (e) => {
@@ -26,6 +27,18 @@ export default class App extends Component {
       [e.target.name]: e.target.checked
     })
   }
+
+  onChangeAvatar = (e) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      this.setState({
+        avatar: e.target.result
+      })
+    }
+
+    reader.readAsDataURL(e.target.files[0]);
+    // console.log(e.target.files[0]);
+  } 
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -118,7 +131,7 @@ export default class App extends Component {
               </div>
             </div>
           </fieldset>
-          <div className="form-check">
+          <div className="form-check mb-2">
             <input className="form-check-input" 
                     type="checkbox" 
                     id="agree" 
@@ -129,6 +142,14 @@ export default class App extends Component {
             <label className="form-check-label" htmlFor="agree">
               Agree
             </label>
+          </div>
+          <div className="form-group">
+            <label htmlFor="avatar">Avatar</label>
+            <input  type="file" 
+                    className="form-control-file" 
+                    name="avatar"
+                    id="avatar" 
+                    onChange={this.onChangeAvatar}  />
           </div>
           <button type="submit" className="btn btn-primary w-100"
                   onClick={this.onSubmit}> Submit</button>
