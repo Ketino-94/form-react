@@ -9,12 +9,21 @@ export default class App extends Component {
     username: '',
     password: '',
     repeatPassword: '',
-    country: '1'
+    country: '1',
+    gender: 'male',
+    agree: true
   }
 
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+    })
+  }
+
+  onChangeAgree = (e) => {
+    console.log(e.target.checked);
+    this.setState({
+      [e.target.name]: e.target.checked
     })
   }
 
@@ -77,6 +86,49 @@ export default class App extends Component {
                     onChange={this.onChange}>
                     {this.getOptionsItem(countries)}
             </select>
+          </div>
+          <fieldset className="form-group">
+            <div className="row">
+              <legend className="col-form-label col-sm-3 pt-0">Gender</legend>
+              <div className="col-sm-9">
+                <div className="form-check">
+                  <input className="form-check-input" 
+                         type="radio" 
+                         name="gender" 
+                         id="male" 
+                         value="male"
+                         checked={this.state.gender === "male"} 
+                         onChange={this.onChange}/>
+                  <label className="form-check-label" htmlFor="male">
+                    Male
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input className="form-check-input" 
+                         type="radio" 
+                         name="gender" 
+                         id="female" 
+                         value="female"
+                         checked={this.state.gender === "female"} 
+                         onChange={this.onChange} />
+                  <label className="form-check-label" htmlFor="female">
+                    Female
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div className="form-check">
+            <input className="form-check-input" 
+                    type="checkbox" 
+                    id="agree" 
+                    name="agree"
+                    value={this.state.agree}
+                    onChange={this.onChangeAgree} 
+                    checked={this.state.agree} />
+            <label className="form-check-label" htmlFor="agree">
+              Agree
+            </label>
           </div>
           <button type="submit" className="btn btn-primary w-100"
                   onClick={this.onSubmit}> Submit</button>
