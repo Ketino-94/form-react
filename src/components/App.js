@@ -13,6 +13,7 @@ export default class App extends Component {
     gender: 'male',
     agree: true,
     avatar: '',
+    age: 0 , 
     errors: {
       username: false,
       password: false,
@@ -80,12 +81,50 @@ export default class App extends Component {
     ));
   }
 
+  decrementAge = () => {
+    this.setState(prevState => ({
+      age: prevState.age - 1 
+    }),
+    () => {
+      if(this.state.age < 3) {
+        this.setState({
+          errors: {
+            age: "Must be more 3"
+          }
+        })
+      } else {
+        this.setState({
+          errors: {
+            age: false
+          }
+        })
+      }
+    })
+  }
+
+  incrementAge = () => {
+    this.setState(prevState => ({
+      age: prevState.age + 1 
+    }),
+    () => {
+      if(this.state.age < 3) {
+        this.setState({
+          errors: {
+            age: "Must be more 3"
+          }
+        })
+      } else {
+        this.setState({
+          errors: {
+            age: false
+          }
+        })
+      }
+    } )
+  }
+
   render() {
     // console.log(this);
-
-    // const getCountries = countries.map(country => (
-    //   <option key={country.id} value={country.id}>{country.name}</option>
-    // ));
 
     return(
       <div className="form-container card">
@@ -166,6 +205,25 @@ export default class App extends Component {
               </div>
             </div>
           </fieldset>
+          <div className="form-group">
+             <div> <label>Age</label></div>
+             <div className="btn-group">
+                <button type="button" 
+                        className="btn btn-secondary"
+                        onClick={this.decrementAge}> - </button>
+                <input type="number" 
+                        className="form-control"
+                        placeholder="Enter age"
+                        name="age"
+                        value={this.state.age}
+                        onChange={this.onChange}/>
+                <button type="button" 
+                        className="btn btn-secondary"
+                        onClick={this.incrementAge}> + </button>
+             </div>
+             {this.state.errors.age ? (
+            <div className="invalid-feedback" >{this.state.errors.age}</div>) : null}
+          </div>
           <div className="form-check mb-2">
             <input className="form-check-input" 
                     type="checkbox" 
