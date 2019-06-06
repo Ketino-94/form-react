@@ -1,24 +1,15 @@
 import React, {Component} from 'react';
 
-import BasicForm  from "./BasicForm";
+// import BasicForm  from "./BasicForm";
 import ContactsForm from './ContactsForm';
-import AvatarForm from './AvatarForm';
+// import AvatarForm from './AvatarForm';
 
  
 export default class App extends Component {
 
   state = {
-    username: '',
-    password: '',
-    repeatPassword: '',
-    country: '1',
-    city: 'Select city', 
-    gender: 'male',
     agree: true,
     age: 0 , 
-    lastname: '',
-    email: '',
-    mobile: 0,
     errors: {
       username: false,
       password: false,
@@ -118,46 +109,9 @@ export default class App extends Component {
 
     return(
       <div className="form-container card">
-        <form className="form card-body">
-          
-          <div className="form-group">
-             <div> <label>Age</label></div>
-             <div className="btn-group">
-                <button type="button" 
-                        className="btn btn-secondary"
-                        onClick={this.decrementAge}> - </button>
-                <input type="number" 
-                        className="form-control"
-                        placeholder="Enter age"
-                        name="age"
-                        value={this.state.age}
-                        onChange={this.onChange}/>
-                <button type="button" 
-                        className="btn btn-secondary"
-                        onClick={this.incrementAge}> + </button>
-             </div>
-             {this.state.errors.age ? (
-            <div className="invalid-feedback" >{this.state.errors.age}</div>) : null}
-          </div>
-          <div className="form-check mb-2">
-            <input className="form-check-input" 
-                    type="checkbox" 
-                    id="agree" 
-                    name="agree"
-                    value={this.state.agree}
-                    onChange={this.onChangeAgree} 
-                    checked={this.state.agree} />
-            <label className="form-check-label" htmlFor="agree">
-              Agree
-            </label>
-          </div>
-          <button type="submit" className="btn btn-primary w-100"
-                  onClick={this.onSubmit}> Submit</button>
-
-        </form>
-        <BasicForm error={this.state.errors}/>
+        {/* <BasicForm />  */}
         <ContactsForm />
-        <AvatarForm />
+        {/* <AvatarForm /> */}
       </div>
     );
   }
