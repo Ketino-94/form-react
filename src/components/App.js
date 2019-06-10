@@ -9,8 +9,9 @@ import FinishForm from './FinishForm';
 export default class App extends Component {
 
   state = {
-    activeTab: 3,
+    activeTab: 1,
     agree: true,
+    avatar: '',
     age: 0 , 
     values: {
       username: "",
@@ -60,62 +61,89 @@ export default class App extends Component {
     })
   }
 
+  onChangeAvatar = (e) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      this.setState({
+        avatar : e.target.result
+      })
+    }
+
+    reader.readAsDataURL(e.target.files[0]);
+    // console.log(e.target.files[0]);
+  } 
 
 
-  onSubmit = (e) => {
-    e.preventDefault();
+
+  validateValues = () => {
     // console.log(this.username.value , this.password.value);
     
     const errors = {}; 
-    if( this.state.values.username.length < 5) {
-      errors.username = 'Must be more 5 characters' ; 
-    } 
+    // eslint-disable-next-line default-case
+    switch (this.state.activeTab) {
+      case 1:
+        if( this.state.values.username.length < 5) {
+          errors.username = 'Must be more 5 characters' ; 
+        } 
 
-    if( this.state.values.password.length < 3) {
-      errors.password = 'Must be more 3 characters' ;
+        if( this.state.values.password.length < 3) {
+          errors.password = 'Must be more 3 characters' ;
+        }
+
+        if( this.state.values.password !== this.state.values.repeatPassword) {
+          errors.repeatPassword = 'Must be equal password' ;
+        }
+        break;
+        case 2:
+          const validateEmail = email => {
+            let valid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return valid.test(String(email).toLowerCase());
+          };
+    
+          const validateMobile = mobile => {
+            let valid = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+            return valid.test(mobile);
+          };
+    
+          if (!validateEmail(this.state.values.email)) {
+            errors.email = "Enter valid email";
+          }
+          if (!validateMobile(this.state.values.mobile)) {
+            errors.mobile = "Enter valid number";
+          }
+    
+          if(this.state.values.city === '') {
+            errors.city = "Required";
+          }
+        break;
     }
+    return errors;
+  }
 
-    if( this.state.values.password !== this.state.values.repeatPassword) {
-      errors.repeatPassword = 'Must be equal password' ;
-    }
-    const validateEmail = email => {
-      let valid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return valid.test(String(email).toLowerCase());
-    };
+  onSubmit = () => {
 
-    const validateMobile = mobile => {
-      let valid = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-      return valid.test(mobile);
-    };
-
-    if (!validateEmail(this.state.values.email)) {
-      errors.email = "Enter valid email";
-    }
-    if (!validateMobile(this.state.values.mobile)) {
-      errors.mobile = "Enter valid number";
-    }
-
-    if(this.state.values.city === '') {
-      errors.city = "Required";
-    }
-
-    if(this.state.values.avatar === '') {
-      errors.city = "Required";
-    }
-
+    const errors = this.validateValues();
     if(Object.keys(errors).length > 0 ){
+      console.log('sadas');
       this.setState({
         errors: errors
       })
     } else {
+      console.log('submit');
       this.setState(prevState => ({
         errors: {},
         activeTab: prevState.activeTab + 1 
       }))
       console.log(this.state.activeTab);
-      console.log('submit', this.state);
     }
   }
+
+  onPrevious = () =>{
+      this.setState(prevState => ({
+        errors: {},
+        activeTab: prevState.activeTab - 1 
+      }));
+  } 
 
   getOptionsItem = (items) => {
       return items.map(item => (
@@ -146,6 +174,7 @@ export default class App extends Component {
           <BasicForm values={this.state.values}
                      errors={this.state.errors}
                      onSubmit={this.onSubmit}
+                     onPrevious={this.onPrevious}
                      onChange={this.onChange}/> 
         ) }
         {this.state.activeTab === 2 && (
@@ -153,16 +182,20 @@ export default class App extends Component {
                         errors={this.state.errors}
                         onSubmit={this.onSubmit}
                         onChange={this.onChange}
+                        onPrevious={this.onPrevious}
                         getOptionsItem={this.getOptionsItem}
                         getOptionsCity={this.getOptionsCity}/>
         ) }
         {this.state.activeTab === 3 && (
-          <AvatarForm values={this.state.values}
+          <AvatarForm avatar={this.state.avatar}
                       errors={this.state.errors}
-                      onSubmit={this.onSubmit}/>
+                      onSubmit={this.onSubmit}
+                      onPrevious={this.onPrevious}
+                      onChangeAvatar={this.onChangeAvatar}/>
         )}
         {this.state.activeTab === 4 && (
-          <FinishForm />
+          <FinishForm avatar={this.state.avatar}
+                      values={this.state.values}  />
         )}
       </div>
     );

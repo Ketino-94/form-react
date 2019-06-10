@@ -8,7 +8,7 @@ import ButtonsForm from './ButtonsForm' ;
 
 export default class ContactsForm extends Component {
     render() {
-      const {onSubmit, values, errors, onChange, getOptionsItem, getOptionsCity} = this.props;
+      const {onSubmit, values, errors, onChange, getOptionsItem, getOptionsCity, onPrevious} = this.props;
         return(
             <form className="form card-body">
                 <Field  id="email"
@@ -48,7 +48,7 @@ export default class ContactsForm extends Component {
                     {errors.city ? (
                       <div className="invalid-feedback" >{errors.city}</div>) : null}
                 </div>
-                <ButtonsForm onSubmit={onSubmit}/>
+                <ButtonsForm onSubmit={onSubmit} onPrevious={onPrevious}/>
             </form>
         );
     }

@@ -3,25 +3,27 @@ import React, {Component} from 'react';
 export default class FinishForm extends Component {  
   
     render() {  
-      const {avatar, username} = this.props;
+      const {avatar, values} = this.props;
   
         return(  
             <div className="container-fluid">  
                 <div className="row mb-4">  
                     <div className="col-4">  
-                      {avatar}
+                      <img className="mb-4" width="100%" src={avatar} alt="avatar"/>
                     </div>  
                     <div className="col-8 d-flex align-items-center">  
-                        <h4>{username}</h4>  
+                        <h4>{values.username} {values.lastname}</h4>  
                     </div>  
                 </div>  
-                <div classNam="row mb-4">  
+                <div className="row mb-4">  
                     <div className="col-12">  
-                      <p><strong></strong></p>
+                      <p><strong>Email</strong> {values.email}</p>
+                      <p><strong>Mobile</strong> {values.mobile}</p>
+                      <p><strong>Location</strong> {values.country} {values.city}</p>
                     </div>  
                 </div>  
-                <div class="d-flex justify-content-center">  
-                    <button type="button" class="btn btn-primary">Reset</button>  
+                <div className="d-flex justify-content-center">  
+                    <button type="button" className="btn btn-primary">Reset</button>  
                 </div>  
             </div>  
         );  

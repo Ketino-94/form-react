@@ -5,7 +5,7 @@ import ButtonsForm from './ButtonsForm' ;
 export default class BasicForm extends Component {	
 	
 	render() { 
-			const {onSubmit, values, errors, onChange} = this.props;
+			const {onSubmit, values, errors, onChange,  activeTab} = this.props;
 			return(
 					<form className="form card-body">
 							<Field  id="username"
@@ -51,7 +51,7 @@ export default class BasicForm extends Component {
 															id="male" 
 															value="male"
 															checked={values.gender === "male"} 
-															onChange={this.onChange}
+															onChange={onChange}
 															error={errors.gender}/>
 											<label className="form-check-label" htmlFor="male">
 													Male
@@ -64,7 +64,7 @@ export default class BasicForm extends Component {
 															id="female" 
 															value="female"
 															checked={values.gender === "female"} 
-															onChange={this.onChange} />
+															onChange={onChange} />
 											<label className="form-check-label" htmlFor="female">
 													Female
 											</label>
@@ -72,7 +72,7 @@ export default class BasicForm extends Component {
 									</div>
 									</div>
 							</fieldset>
-							<ButtonsForm onSubmit={onSubmit}/>
+							<ButtonsForm onSubmit={onSubmit} disabled={activeTab} />
 					</form>
 			);
 	}
