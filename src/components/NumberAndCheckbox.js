@@ -1,6 +1,46 @@
 import React from 'react' ;
 
 const Number = () => {
+
+// decrementAge = () => {
+//   this.setState(prevState => ({
+//     age: prevState.age - 1 
+//   }),
+//   () => {
+//     if(this.state.age < 3) {
+//       this.setState({
+//         errors: {
+//           age: "Must be more 3"
+//         }
+//       })
+//     } else {
+//       this.setState({
+//         errors: {
+//           age: false
+//         }
+//       })
+//     }
+//   })
+// }
+
+// incrementAge = () => {
+//   this.setState(prevState => ({
+//     age: prevState.age + 1 
+//   }),
+//   () => {
+//     if(this.state.age < 3) {
+//       this.setState({
+//         errors: {
+//           age: "Must be more 3"
+//         }
+//       })
+//     } else {
+//       this.setState({
+//         errors: {
+//           age: false
+//         }
+//       })
+//     }
     return(
         <form className="form card-body">
           

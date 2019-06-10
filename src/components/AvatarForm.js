@@ -1,18 +1,15 @@
 import React, {Component} from 'react';
-
+import DefaultAvatar from '../img/default-avatar.png'
 import ButtonsForm from './ButtonsForm' ;
 
 export default class AvatarForm extends Component {
-
-    state = {
-        avatar: ''
-    }
+  const {values} = props;
 
     onChangeAvatar = (e) => {
         const reader = new FileReader();
         reader.onload = e => {
           this.setState({
-            avatar: e.target.result
+            values.avatar : e.target.result
           })
         }
     
@@ -20,19 +17,23 @@ export default class AvatarForm extends Component {
         // console.log(e.target.files[0]);
       } 
 
-    render() {
 
+    render() {
+        const {values,errors, onSubmit} = this.props; 
         return(
             <form className="form card-body">
-                <div className="form-group">
-                    <label htmlFor="avatar">Avatar</label>
+                <img className="mb-4" width="100%" src={values.avatar.length ? values.avatar : DefaultAvatar} alt="avatar"/>
+                <div className="custom-file mb-4">
                     <input  type="file" 
-                            className="form-control-file" 
+                            className="custom-file-input" 
                             name="avatar"
                             id="avatar" 
                             onChange={this.onChangeAvatar}  />
+                    <label className="custom-file-label"  htmlFor="avatar">Choose avatar</label>
                 </div>
-                <ButtonsForm/>
+                {errors.avatar ? (
+                      <div className="invalid-feedback" >{errors.avatar}</div>) : null}
+                <ButtonsForm onSubmit={onSubmit}/>
             </form>
         );
     }

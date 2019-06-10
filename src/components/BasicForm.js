@@ -2,64 +2,10 @@ import React, {Component} from 'react' ;
 import Field from './Field' ;
 import ButtonsForm from './ButtonsForm' ;
 
-export default class BasicForm extends Component {
-
+export default class BasicForm extends Component {	
 	
-	state= {
-		username: '',
-    password: '',
-    gender: 'male',
-		repeatPassword: '',
-		lastname: '',
-		errors: {
-				username: '',
-				lastname: '',
-				password: '',
-				repeatPassword: ''
-			}
-	}
-
-	onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-	}
-
-	onSubmit = (e) => {
-    e.preventDefault();
-    // console.log(this.username.value , this.password.value);
-    
-    const errors = {}; 
-    if( this.state.username.length < 5) {
-      errors.username = 'Must be more 5 characters' ; 
-		} 
-
-		if( this.state.lastname.length < 5) {
-      errors.lastname = 'Must be more 5 characters' ; 
-    }
-
-    if( this.state.password.length < 3) {
-      errors.password = 'Must be more 3 characters' ;
-    }
-
-    if( this.state.password !== this.state.repeatPassword) {
-      errors.repeatPassword = 'Must be equal password' ;
-		}
-
-    if(Object.keys(errors).length > 0 ){
-      this.setState({
-        errors: errors
-      })
-    } else {
-      this.setState({
-        errors: {}
-      })
-      console.log('submit', this.state);
-    }
-  }
-	
-	
-	render() {
+	render() { 
+			const {onSubmit, values, errors, onChange} = this.props;
 			return(
 					<form className="form card-body">
 							<Field  id="username"
@@ -67,33 +13,33 @@ export default class BasicForm extends Component {
 											type="text"
 											placeholder="Enter username"
 											name="username"
-											value={this.state.username}
-											onChange={this.onChange}
-											error={this.state.errors.username}  />
+											value={values.username}
+											onChange={onChange}
+											error={errors.username} />
 							<Field  id="lastname"
 											labelText="Lastname"
 											type="text"
 											placeholder="Enter lastname"
 											name="lastname"
-											value={this.state.lastname}
-											onChange={this.onChange}
-											error={this.state.errors.lastname}  />
+											value={values.lastname}
+											onChange={onChange}
+											error={errors.lastname}  />
 							<Field  id="password"
 											labelText="password"
 											type="text"
 											placeholder="Enter password"
 											name="password"
-											value={this.state.password}
-											onChange={this.onChange}
-											error={this.state.errors.password}  />
+											value={values.password}
+											onChange={onChange}
+											error={errors.password}  />
 							<Field  id="repeatPassword"
 											labelText="Repeat password"
 											type="text"
 											placeholder="Repeat password"
 											name="repeatPassword"
-											value={this.state.repeatPassword}
-											onChange={this.onChange}
-											error={this.state.errors.repeatPassword}  />
+											value={values.repeatPassword}
+											onChange={onChange}
+											error={errors.repeatPassword}  />
 							<fieldset className="form-group">
 									<div className="row">
 									<legend className="col-form-label col-sm-3 pt-0">Gender</legend>
@@ -104,9 +50,9 @@ export default class BasicForm extends Component {
 															name="gender" 
 															id="male" 
 															value="male"
-															checked={this.state.gender === "male"} 
+															checked={values.gender === "male"} 
 															onChange={this.onChange}
-															error={this.state.errors.gender}/>
+															error={errors.gender}/>
 											<label className="form-check-label" htmlFor="male">
 													Male
 											</label>
@@ -117,7 +63,7 @@ export default class BasicForm extends Component {
 															name="gender" 
 															id="female" 
 															value="female"
-															checked={this.state.gender === "female"} 
+															checked={values.gender === "female"} 
 															onChange={this.onChange} />
 											<label className="form-check-label" htmlFor="female">
 													Female
@@ -126,7 +72,7 @@ export default class BasicForm extends Component {
 									</div>
 									</div>
 							</fieldset>
-							<ButtonsForm onSubmit={this.onSubmit}/>
+							<ButtonsForm onSubmit={onSubmit}/>
 					</form>
 			);
 	}

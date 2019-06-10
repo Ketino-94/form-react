@@ -7,7 +7,7 @@ export default class ButtonsForm extends Component{
           <div className="d-flex justify-content-center">
               {/* <button type="button" className="btn btn-light mr-4"
                   onClick={onSubmit}> Previous </button> */}
-              <button type="submit" className="btn btn-secondary"
+              <button type="button" className="btn btn-secondary"
                   onClick={onSubmit}> Next</button>
           </div>
       );
