@@ -25,7 +25,7 @@ export default class FinishForm extends Component {
         </div>  
         <div className="d-flex justify-content-center">  
             <button type="button" 
-                    className="btn btn-primary" onClick={console.log(values.email, values.mobile, values.username)}>Reset</button>  
+                    className="btn btn-primary" onClick={resetData}>Reset</button>  
         </div>  
       </div>  
     );  
