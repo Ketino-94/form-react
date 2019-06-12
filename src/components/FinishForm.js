@@ -1,7 +1,7 @@
 import React, {Component} from 'react';  
 
-// import countries from "../data/countries"; 
-// import cities from "../data/cities"; 
+import countries from "../data/countries"; 
+import cities from "../data/cities"; 
   
 export default class FinishForm extends Component {  
   render() {  
@@ -20,7 +20,7 @@ export default class FinishForm extends Component {
             <div className="col-12">  
               <p><strong>Email</strong> {values.email}</p>
               <p><strong>Mobile</strong> {values.mobile}</p>
-              <p><strong>Location</strong> {values.country} , {values.city}</p>
+              <p><strong>Location</strong> {countries[values.country-1].name} , {cities[values.city].name}</p>
             </div>  
         </div>  
         <div className="d-flex justify-content-center">  

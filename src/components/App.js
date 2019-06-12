@@ -22,7 +22,7 @@ export default class App extends Component {
       email: "",
       mobile: "",
       country: 1,
-      city: 1,
+      city: 0,
       avatar: ''
     },
     errors: {
@@ -64,11 +64,12 @@ export default class App extends Component {
   onChangeAvatar = (e) => {
     const reader = new FileReader();
     reader.onload = e => {
-      this.setState({
+      this.setState(prevState=>({
         values: {
+          ...prevState.values , 
           avatar : e.target.result
         }
-      })
+      }))
     }
 
     reader.readAsDataURL(e.target.files[0]);
@@ -118,7 +119,7 @@ export default class App extends Component {
             errors.mobile = "Enter valid number";
           }
     
-          if(this.state.values.city === '') {
+          if(this.state.values.city === 0) {
             errors.city = "Required";
           }
         break;
@@ -185,8 +186,8 @@ export default class App extends Component {
         gender: 'male',
         email: "",
         mobile: "",
-        country: '',
-        city: '',
+        country: 1,
+        city: 0,
         avatar: ''
       },
       activeTab: 1
