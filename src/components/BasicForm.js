@@ -26,7 +26,7 @@ export default class BasicForm extends Component {
 											error={errors.lastname}  />
 							<Field  id="password"
 											labelText="password"
-											type="text"
+											type="password"
 											placeholder="Enter password"
 											name="password"
 											value={values.password}
@@ -34,7 +34,7 @@ export default class BasicForm extends Component {
 											error={errors.password}  />
 							<Field  id="repeatPassword"
 											labelText="Repeat password"
-											type="text"
+											type="password"
 											placeholder="Repeat password"
 											name="repeatPassword"
 											value={values.repeatPassword}
@@ -72,7 +72,7 @@ export default class BasicForm extends Component {
 									</div>
 									</div>
 							</fieldset>
-							<ButtonsForm onSubmit={onSubmit} disabled={activeTab} />
+							<ButtonsForm onSubmit={onSubmit} activeTab={activeTab} />
 					</form>
 			);
 	}

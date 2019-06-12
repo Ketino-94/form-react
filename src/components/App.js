@@ -4,6 +4,7 @@ import BasicForm  from "./BasicForm";
 import ContactsForm from './ContactsForm';
 import AvatarForm from './AvatarForm';
 import FinishForm from './FinishForm';
+import StepItems from './StepItems' ;
 
  
 export default class App extends Component {
@@ -11,7 +12,6 @@ export default class App extends Component {
   state = {
     activeTab: 1,
     agree: true,
-    avatar: '',
     age: 0 , 
     values: {
       username: "",
@@ -65,7 +65,9 @@ export default class App extends Component {
     const reader = new FileReader();
     reader.onload = e => {
       this.setState({
-        avatar : e.target.result
+        values: {
+          avatar : e.target.result
+        }
       })
     }
 
@@ -82,17 +84,21 @@ export default class App extends Component {
     // eslint-disable-next-line default-case
     switch (this.state.activeTab) {
       case 1:
-        if( this.state.values.username.length < 5) {
-          errors.username = 'Must be more 5 characters' ; 
-        } 
+          if( this.state.values.username.length < 5) {
+            errors.username = 'Must be more 5 characters' ; 
+          } 
 
-        if( this.state.values.password.length < 3) {
-          errors.password = 'Must be more 3 characters' ;
-        }
+          if( this.state.values.lastname.length < 5) {
+            errors.lastname = 'Must be more 5 characters' ; 
+          }
 
-        if( this.state.values.password !== this.state.values.repeatPassword) {
-          errors.repeatPassword = 'Must be equal password' ;
-        }
+          if( this.state.values.password.length < 3) {
+            errors.password = 'Must be more 3 characters' ;
+          }
+
+          if( this.state.values.password !== this.state.values.repeatPassword) {
+            errors.repeatPassword = 'Must be equal password' ;
+          }
         break;
         case 2:
           const validateEmail = email => {
@@ -116,6 +122,11 @@ export default class App extends Component {
             errors.city = "Required";
           }
         break;
+        case 3:
+          if( this.state.values.avatar  === '') {
+            errors.avatar = 'Required' ;
+          }
+        break;
     }
     return errors;
   }
@@ -124,12 +135,11 @@ export default class App extends Component {
 
     const errors = this.validateValues();
     if(Object.keys(errors).length > 0 ){
-      console.log('sadas');
       this.setState({
         errors: errors
       })
     } else {
-      console.log('submit');
+      console.log('submit', this.state.values.username, this.state.values.lastname);
       this.setState(prevState => ({
         errors: {},
         activeTab: prevState.activeTab + 1 
@@ -164,15 +174,35 @@ export default class App extends Component {
         ));
   }
 
+  resetData = () => {
+    console.log('resetData')
+    this.setState({
+      values: {
+        username: "",
+        lastname: "",
+        password: "",
+        repeatPassword: "",
+        gender: 'male',
+        email: "",
+        mobile: "",
+        country: '',
+        city: '',
+        avatar: ''
+      },
+      activeTab: 1
+    })
+  }
 
   render() {
     // console.log(this);
 
     return(
       <div className="form-container card">
+        <StepItems activeTab={this.state.activeTab}/>
         {this.state.activeTab === 1 && (
           <BasicForm values={this.state.values}
                      errors={this.state.errors}
+                     activeTab={this.state.activeTab}
                      onSubmit={this.onSubmit}
                      onPrevious={this.onPrevious}
                      onChange={this.onChange}/> 
@@ -187,15 +217,15 @@ export default class App extends Component {
                         getOptionsCity={this.getOptionsCity}/>
         ) }
         {this.state.activeTab === 3 && (
-          <AvatarForm avatar={this.state.avatar}
+          <AvatarForm values={this.state.values}
                       errors={this.state.errors}
                       onSubmit={this.onSubmit}
                       onPrevious={this.onPrevious}
                       onChangeAvatar={this.onChangeAvatar}/>
         )}
         {this.state.activeTab === 4 && (
-          <FinishForm avatar={this.state.avatar}
-                      values={this.state.values}  />
+          <FinishForm values={this.state.values}  
+                      resetData={this.resetData}  />
         )}
       </div>
     );
