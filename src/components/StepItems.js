@@ -44,5 +44,3 @@ export default class StepItems extends Component {
 		)
 	}
 }
-
-// {activeTab === 1 ? "step is-active" : "step is-completed"}

@@ -47,10 +47,10 @@ export default class App extends Component {
 			errors: {
 				...prevState.errors,
 				[name]: '',
-			},
+			},    
 		}))
 	}
-
+ 
 	onChangeAgree = e => {
 		this.setState({
 			[e.target.name]: e.target.checked,
