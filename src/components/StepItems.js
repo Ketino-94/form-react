@@ -21,7 +21,6 @@ export default class StepItems extends Component {
 			},
 		],
 	}
-
 	render() {
 		const { tabs } = this.state
 		const { activeTab } = this.props
