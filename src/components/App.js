@@ -71,51 +71,54 @@ export default class App extends Component {
 	}
 
 	validateValues = () => {
+		const { values } = this.state
 		const errors = {}
 		switch (this.state.activeTab) {
 			case 1:
-				if (this.state.values.username.length < 5) {
+				if (values.username.length < 5) {
 					errors.username = 'Must be more 5 characters'
 				}
 
-				if (this.state.values.lastname.length < 5) {
+				if (values.lastname.length < 5) {
 					errors.lastname = 'Must be more 5 characters'
 				}
 
-				if (this.state.values.password.length < 3) {
+				if (values.password.length < 3) {
 					errors.password = 'Must be more 3 characters'
 				}
 
-				if (this.state.values.password !== this.state.values.repeatPassword) {
+				if (values.password !== values.repeatPassword) {
 					errors.repeatPassword = 'Must be equal password'
 				}
 				break
 			case 2:
 				const validateEmail = email => {
-					let valid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+					let valid = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 					return valid.test(String(email).toLowerCase())
 				}
 
 				const validateMobile = mobile => {
-					let valid = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+					let valid = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im
 					return valid.test(mobile)
 				}
 
-				if (!validateEmail(this.state.values.email)) {
+				if (!validateEmail(values.email)) {
 					errors.email = 'Enter valid email'
 				}
-				if (!validateMobile(this.state.values.mobile)) {
+				if (!validateMobile(values.mobile)) {
 					errors.mobile = 'Enter valid number'
 				}
 
-				if (this.state.values.city === 0) {
+				if (values.city === 0) {
 					errors.city = 'Required'
 				}
 				break
 			case 3:
-				if (this.state.values.avatar === '') {
+				if (values.avatar === '') {
 					errors.avatar = 'Required'
 				}
+				break
+			default:
 				break
 		}
 		return errors
@@ -184,23 +187,24 @@ export default class App extends Component {
 	}
 
 	render() {
+		const { activeTab, values, errors } = this.state
 		return (
 			<div className="form-container card">
-				<StepItems activeTab={this.state.activeTab} />
-				{this.state.activeTab === 1 && (
+				<StepItems activeTab={activeTab} />
+				{activeTab === 1 && (
 					<BasicForm
-						values={this.state.values}
-						errors={this.state.errors}
-						activeTab={this.state.activeTab}
+						values={values}
+						errors={errors}
+						activeTab={activeTab}
 						onSubmit={this.onSubmit}
 						onPrevious={this.onPrevious}
 						onChange={this.onChange}
 					/>
 				)}
-				{this.state.activeTab === 2 && (
+				{activeTab === 2 && (
 					<ContactsForm
-						values={this.state.values}
-						errors={this.state.errors}
+						values={values}
+						errors={errors}
 						onSubmit={this.onSubmit}
 						onChange={this.onChange}
 						onPrevious={this.onPrevious}
@@ -208,17 +212,17 @@ export default class App extends Component {
 						getOptionsCity={this.getOptionsCity}
 					/>
 				)}
-				{this.state.activeTab === 3 && (
+				{activeTab === 3 && (
 					<AvatarForm
-						values={this.state.values}
-						errors={this.state.errors}
+						values={values}
+						errors={errors}
 						onSubmit={this.onSubmit}
 						onPrevious={this.onPrevious}
 						onChangeAvatar={this.onChangeAvatar}
 					/>
 				)}
-				{this.state.activeTab === 4 && (
-					<FinishForm values={this.state.values} resetData={this.resetData} />
+				{activeTab === 4 && (
+					<FinishForm values={values} resetData={this.resetData} />
 				)}
 			</div>
 		)
