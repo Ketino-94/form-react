@@ -7,7 +7,7 @@ export default class StepItems extends Component {
         <div className="steps mb-1 mt-3">
           <div className={activeTab === 1 ? "step is-active" : "step is-completed"} >
                 <div className="step__marker">1</div>
-                <div className="step__title mt-1">Basic</div>
+                <div className="step__title mt-1">Basic</div> 
             </div>
             <div className={activeTab === 2 ? "step is-active" : "step is-completed"}>
                 <div className="step__marker">2</div>

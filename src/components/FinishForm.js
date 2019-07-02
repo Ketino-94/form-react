@@ -7,7 +7,7 @@ export default class FinishForm extends Component {
   render() {  
     const {values, resetData} = this.props;
     return(  
-      <div className="container-fluid card-body">  
+      <div className="container-fluid card-body" >  
         <div className="row mb-4">  
             <div className="col-4">  
               <img className="mb-4" width="100%" src={values.avatar} alt="avatar"/>
