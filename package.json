@@ -15,6 +15,9 @@
     "precommit": "lint-staged",
     "eslint": "node_modules/.bin/eslint src/"
   },
+  "eslint": {
+    "extends": "react-app"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
